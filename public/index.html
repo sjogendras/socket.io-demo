@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Socket.io Demo App</title>
+</head>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io('http://localhost:1234');
+
+    socket.on('message-from-server', function(evt){
+        document.getElementById('dvMsgFromServer').appendChild(
+            document.createTextNode(JSON.stringify(evt))
+        );
+    });
+
+    function sendMessage(evt){
+        socket.emit('message-from-client',{
+            greeting: evt.value
+        });
+    }
+</script>
+<body>
+    <div id='dvMsgFromServer'></div>
+    Send Message:
+    <div>
+        <input type="text" onkeyup="sendMessage(this);">
+    </div>
+</body>
+</html>
